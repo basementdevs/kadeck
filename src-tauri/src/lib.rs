@@ -4,6 +4,7 @@ use tauri_plugin_store::StoreExt;
 
 mod actions;
 mod integrations;
+mod profiles;
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
 
