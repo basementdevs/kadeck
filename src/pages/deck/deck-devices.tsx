@@ -1,6 +1,6 @@
 import {ResizablePanel} from "@/components/ui/resizable.tsx";
 import { invoke } from '@tauri-apps/api/core';
-import {Module, ModuleAction, ModuleSettings} from "@/vite-env";
+import {Module} from "@/vite-env";
 import {useState} from "react";
 
 
