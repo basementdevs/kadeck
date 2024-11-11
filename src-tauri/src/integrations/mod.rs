@@ -40,11 +40,6 @@ impl ModuleManager {
             modules: vec![ObsModule::new().get_module()],
         }
     }
-
-    fn add_module(&mut self, module: Module) {
-        self.modules.push(module);
-    }
-
     pub fn get_modules(&self) -> Vec<Module> {
         self.modules.clone()
     }
