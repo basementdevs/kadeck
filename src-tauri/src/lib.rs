@@ -71,8 +71,8 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             actions::get_modules,
-            actions::get_profile_manager,
-            actions::set_default_profile
+            profiles::actions::get_profile_manager,
+            profiles::actions::set_default_profile
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
