@@ -1,31 +1,27 @@
 import { useState, useEffect } from 'react';
 import {invoke} from "@tauri-apps/api/core";
+import {ProfileManager} from "@/vite-env";
 
+const useProfileManager = () => {
+    const [profileManager, setProfileManager] = useState<ProfileManager>({profiles: [], selected_profile: null} as ProfileManager);
 
-export function useProfile() {
-    const [profile, setProfile] = useState<Profile | null>(null);
-
+    const fetchProfiles = () => {
+        invoke("get_profile_manager")
+            .then((result: ProfileManager | unknown) => {
+                // @ts-ignore
+                result.profiles = result.profiles.map((profile: any) => {
+                    profile.created_at = new Date(profile.created_at);
+                    return profile;
+                });
+                setProfileManager(result as ProfileManager);
+            })
+    }
 
     useEffect(() => {
-        invoke<T>(command, args)
-            .then((result) => {
-                setData(result);
-                setError(null);
-            })
-            .catch((err) => {
-                setError(err);
-                setData(null);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [command, args]);
+        fetchProfiles();
+    }, []);
 
-    return { data, error, loading };
+    return {profileManager, fetchProfiles};
 }
 
-
-
-
-
-
+export { useProfileManager };

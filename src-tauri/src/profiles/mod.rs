@@ -34,8 +34,8 @@ struct DeviceTrigger {
     name: String,
     trigger_type: TriggerType,
     key_code: i32,
-    module: String,
-    action: String,
+    module: String, // OBS
+    action: String, // Start Streaming
     arguments: HashMap<String, String>,
 }
 
