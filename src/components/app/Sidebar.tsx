@@ -6,13 +6,12 @@ import {
     SidebarGroupContent,
     SidebarGroupLabel,
     SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem
+    SidebarMenu, SidebarMenuButton, SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
 import {ChevronDown, LucideGithub, Menu, Mic, Music, Settings, Tag, Video} from "lucide-react";
 import {useState} from "react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible.tsx";
+import SidebarDraggableItem from "@/components/app/sidebar-draggable-item.tsx";
 
 export function AppSidebar() {
     const [searchTerm, setSearchTerm] = useState('')
@@ -52,7 +51,9 @@ export function AppSidebar() {
             title: 'OBS Studio',
             icon: <Video className="w-5 h-5"/>,
             items: [
-                {name: 'Stream', icon: <Video className="w-4 h-4"/>},
+                {
+                    name: 'Stream', icon: <Video className="w-4 h-4"/>
+                },
                 {name: 'Record', icon: <Video className="w-4 h-4"/>},
                 {name: 'Scene', icon: <Video className="w-4 h-4"/>},
                 {name: 'Source', icon: <Video className="w-4 h-4"/>},
@@ -100,14 +101,18 @@ export function AppSidebar() {
                                 <SidebarGroupContent>
                                     <SidebarMenu>
                                         {tab.items.map((item, itemIndex) => (
-                                            <SidebarMenuItem key={itemIndex}>
-                                                <SidebarMenuButton>
-                          <span className="flex items-center">
-                            {item.icon}
-                              <span className="ml-2">{item.name}</span>
-                          </span>
-                                                </SidebarMenuButton>
-                                            </SidebarMenuItem>
+                                            <SidebarDraggableItem item={item}
+                                                                  key={"sidebar-item-" + tab.title + "-" + itemIndex}
+                                                                  idx={itemIndex}>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton>
+                                                        {item.icon}
+                                                        <span className="flex items-center">
+                                                            <span className="ml-2"> {item.name} </span>
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            </SidebarDraggableItem>
                                         ))}
                                     </SidebarMenu>
                                 </SidebarGroupContent>
