@@ -1,5 +1,3 @@
-
-
 ## Dev Notes
 
 * **profiles:** configurations for the app which will reflect all devices
@@ -18,6 +16,13 @@
     * Lighstrip
     * W/e
 
+## Hooks Needed
+
+* When Select which device: useFetchDevices
+  * HID Devices from specific vendors
+* Saving the Settings: useSaveProfile
+  * POST to the API
+
 ## Flow
 
 1. [StreamDeck Worker]
@@ -34,6 +39,31 @@
         4. User selects the action and switch to the configuration tab
             5. Fields are populated based on the action settings object
         5. User sets the configuration
+
+
+## UI Draggable
+
+Goal: bring an "Action" to some specific Key. 
+* Global Context for React DND
+* Lock features per type (Button, Knob, Touch)
+* 
+
+## Devices 
+
+```json
+[
+  {
+    "name": "StreamDeck+",
+    "type": "streamdeckplus",
+    "keys": 8,
+    "knobs": 4,
+    "touch": 1
+  }
+]
+
+```
+
+
    
 ## Profiles
 
