@@ -12,6 +12,15 @@ enum DeviceType {
     StreamDeckPlus,
 }
 
+impl DeviceType {
+    fn from_str(s: &str) -> Option<DeviceType> {
+        match s {
+            "streamdeckplus" => Some(DeviceType::StreamDeckPlus),
+            _ => None,
+        }
+    }
+}
+
 impl Display for DeviceType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -32,8 +41,7 @@ enum TriggerType {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
-struct DeviceTrigger {
-    name: String,
+pub struct DeviceTrigger {
     trigger_type: TriggerType,
     key_code: i32,
     module: String, // OBS
@@ -52,7 +60,7 @@ pub struct Profile {
     pub id: Uuid,
     pub name: String,
     devices: Option<Vec<DeviceProfile>>,
-    created_at: DateTime<Utc>
+    created_at: DateTime<Utc>,
 }
 
 impl Profile {
@@ -61,7 +69,7 @@ impl Profile {
             id: Uuid::new_v4(),
             name: "Default".to_string(),
             devices: None,
-            created_at: Utc::now()
+            created_at: Utc::now(),
         }
     }
 }
@@ -90,11 +98,11 @@ impl ProfileManager {
             Ok(manager) => {
                 info!("Successfully deserialized ProfileManager: {:?}", manager);
                 Ok(manager)
-            },
+            }
             Err(e) => {
                 error!("Failed to deserialize ProfileManager: {}", e);
                 Err(e)
-            },
+            }
         }
     }
 
@@ -123,6 +131,41 @@ impl ProfileManager {
         }
         None
     }
+
+    pub fn update_active_profile_settings(
+        &mut self,
+        device: DeviceType,
+        device_trigger: DeviceTrigger,
+    ) {
+        if let Some(selected_profile_id) = self.selected_profile {
+            if let Some(active_profile) = self
+                .profiles
+                .as_mut()
+                .and_then(|profiles| profiles.iter_mut().find(|p| p.id == selected_profile_id))
+            {
+                if let Some(devices) = active_profile.devices.as_mut() {
+                    for device_profile in devices.iter_mut() {
+                        if device_profile.device_type == device {
+                            // Remove triggers with the same key_code
+                            device_profile
+                                .settings
+                                .retain(|trigger| trigger.key_code != device_trigger.key_code);
+
+                            // Add the new device_trigger
+                            device_profile.settings.push(device_trigger.clone());
+                        }
+                    }
+                } else {
+                    // If the devices vector is None, initialize it with a new DeviceProfile
+                    active_profile.devices = Some(vec![DeviceProfile {
+                        device_type: device.clone(),
+                        settings: vec![device_trigger.clone()],
+                    }]);
+                }
+            }
+        }
+    }
+
 }
 
 #[cfg(test)]
@@ -138,7 +181,6 @@ mod tests {
             devices: Some(vec![DeviceProfile {
                 device_type: DeviceType::StreamDeckPlus,
                 settings: vec![DeviceTrigger {
-                    name: "Test".to_string(),
                     trigger_type: TriggerType::Button,
                     key_code: 0,
                     module: "Test".to_string(),
