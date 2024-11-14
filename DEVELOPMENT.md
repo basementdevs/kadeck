@@ -35,3 +35,42 @@
             5. Fields are populated based on the action settings object
         5. User sets the configuration
    
+## Profiles
+
+```json
+{
+  "name": "Streaming Profile",
+  "devices": [
+    {
+      "device_type": "StreamDeckPlus",
+      "settings": [
+        {
+          "trigger_type": "Button",
+          "key_code": 1,
+          "module": "OBS",
+          "action": "StartStreaming",
+          "arguments": {}
+        },
+        {
+          "trigger_type": "Knob",
+          "key_code": 1,
+          "module": "Spotify",
+          "action": "Volume",
+          "arguments": {}
+        },
+        {
+          "trigger_type": "Button",
+          "key_code": 2,
+          "module": "OBS",
+          "action": "ToggleSourceItem",
+          "arguments": {
+            "scene": "scene-uuid",
+            "source": "camera-source-uuid"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+```

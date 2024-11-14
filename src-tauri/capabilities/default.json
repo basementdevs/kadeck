@@ -8,6 +8,20 @@
   "permissions": [
     "core:default",
     "shell:allow-open",
-    "store:default"
-  ]
+    "store:default",
+    "fs:default",
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [
+        {
+          "path": "$APPDATA/*"
+        }
+      ]
+    },
+    "log:default"
+  ],
+  "platforms": [
+    "linux"
+  ],
+  "capabilities": []
 }

@@ -9,14 +9,22 @@ KaDeck is a StreamDeck App that will allow you to configure your StreamDeck with
 We're still designing how things will work, but the idea is to have a Tauri App that will communicate with a Rust Worker
 that will be listening to the StreamDeck events.
 
-Our goal is to make something compatible and easy to use for everyone, so we're trying to make it as modular as possible.
+Our goal is to make something compatible and easy to use for everyone, so we're trying to make it as modular as
+possible.
 
 ## How to run
 
 This is a Tauri App, so you will need to have Tauri and Rust (stable) installed in your machine.
+
 ````bash
 pnpm tauri dev
 ````
+
+## Important information
+
+* All the configuration files will be stored in the `%AppData%` folder. In linux, you can find it at
+  `~/.local/share/com.kadeck.app`.
+* All the configurations will be stored at `kadeck-settings.json` file inside `%AppData%`.
 
 ## Contributing
 
