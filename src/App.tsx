@@ -16,7 +16,7 @@ function App() {
             component: <Deck/>
         },
     ]
-    return <WelcomePage/>
+    //return <WelcomePage/>
     return <AppLayout children={pages[1].component}/>;
 }
 

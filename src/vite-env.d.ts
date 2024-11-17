@@ -24,7 +24,6 @@ export interface Module {
 }
 
 interface DeviceTrigger {
-    name: string;
     trigger_type: TriggerType;
     key_code: number;
     module: string;
@@ -57,4 +56,11 @@ enum TriggerType {
     Button = "Button",
     Knob = "Knob",
     Display = "Display",
+}
+
+type DeckDevice = {
+    name: string;
+    buttons: number;
+    screens: number;
+    knobs: number;
 }

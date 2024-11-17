@@ -4,7 +4,7 @@ use tauri::{command, State, Wry};
 use tauri_plugin_store::StoreExt;
 use uuid::Uuid;
 use crate::AppState;
-use crate::profiles::ProfileManager;
+use crate::profiles::{DeviceTrigger, DeviceType, ProfileManager};
 
 #[command]
 pub fn get_profile_manager(state: State<'_, Arc<Mutex<AppState>>>) -> ProfileManager {
@@ -39,4 +39,28 @@ pub async fn set_default_profile(
     }
 
     Ok("Profile set".to_string())
+}
+
+#[command]
+pub async fn save_profile_settings(
+    window: tauri::Window<Wry>,
+    state: State<'_, Arc<Mutex<AppState>>>,
+    device: &str,
+    payload: DeviceTrigger
+) -> Result<String, String> {
+    let mut app_state = state.lock().unwrap();
+    let mut profile_manager = app_state.profile_manager.clone().unwrap();
+    info!("Saving profile settings for: {:?}", payload);
+    info!("Saving profile settings for: {:?}", device);
+
+    let device = DeviceType::from_str(device).unwrap();
+    profile_manager.update_active_profile_settings(device, payload);
+    app_state.profile_manager = Some(profile_manager.clone());
+
+    let store = window.store("kadeck-settings.json").unwrap();
+    store.set("profiles", serde_json::to_value(&profile_manager).unwrap());
+    store.save().expect("Failed to save profile manager");
+    store.close_resource();
+
+    Ok("Profile settings saved".to_string())
 }
