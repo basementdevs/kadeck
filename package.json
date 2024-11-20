@@ -10,6 +10,7 @@
     "tauri": "WEBKIT_DISABLE_DMABUF_RENDERER=1 tauri"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
     "@radix-ui/react-collapsible": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-popover": "^1.1.2",
