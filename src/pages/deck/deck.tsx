@@ -21,17 +21,16 @@ interface DeckProps {
 }
 
 export default function Deck(props: DeckProps) {
-  console.log(props);
   return (
-    <div>
+    <div className="h-screen w-full overflow-auto ">
       <ResizablePanelGroup direction="vertical">
-        <SidebarTrigger className="bg-gray-800 hover:bg-gray-900 transition-colors" />
-        <ResizablePanel defaultSize={0} minSize={0}>
+        <SidebarTrigger className="bg-gray-800 hover:bg-gray-900 transition-colors p-6" />
+        <ResizablePanel defaultSize={0} minSize={0} className="px-10  ">
           {props.selectedDevice === "streamdeckplus" && (
             <StreamDeckPlus droppedItems={props.droppedItems} />
           )}
         </ResizablePanel>
-        <ResizableHandle />
+        <ResizableHandle withHandle />
         <DeckSettings />
       </ResizablePanelGroup>
     </div>
