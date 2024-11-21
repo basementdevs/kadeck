@@ -105,7 +105,7 @@ export function AppSidebar() {
       <SidebarHeader className="bg-gray-800">
         <h1 className="text-white">Kadeck foda</h1>
       </SidebarHeader>
-      <SidebarContent className="bg-gray-800 pt-5 overflow-visible">
+      <SidebarContent className="bg-gray-800 pt-5 overflow-visible ">
         <p className=" px-3 text-gray-400">Modules</p>
         {filteredTabs.map((tab, index) => (
           <Collapsible defaultOpen={tab.opened} className="group/collapsible ">
@@ -145,7 +145,7 @@ export function AppSidebar() {
           </Collapsible>
         ))}
       </SidebarContent>
-      <SidebarFooter className="bg-gray-800 text-white p-4 text-center flex justify-between flex-row text-sm items-center">
+      <SidebarFooter className="bg-gray-800 text-white p-4 text-center flex justify-between flex-row text-sm items-center z-[999]">
         <span>2024 © Kadeck</span>
         <a href={"https://github.com/basementdevs"}>
           {" "}
