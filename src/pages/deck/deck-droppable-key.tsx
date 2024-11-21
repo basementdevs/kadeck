@@ -1,30 +1,32 @@
 // DropZone.tsx
-import React from 'react';
-import { useDroppable } from '@dnd-kit/core';
+import React from "react";
+import { useDroppable } from "@dnd-kit/core";
+import clsx from "clsx";
 
 interface DropZoneProps {
-    id: string;
-    children: React.ReactNode;
+  id: string;
+  children: React.ReactNode;
+  full?: boolean;
 }
 
-const DropZone: React.FC<DropZoneProps> = ({ id, children }) => {
-    const { isOver, setNodeRef } = useDroppable({
-        id,
-    });
+const DropZone: React.FC<DropZoneProps> = ({ id, children, full }) => {
+  const { isOver, setNodeRef } = useDroppable({
+    id,
+  });
 
-    const style = {
-        backgroundColor: isOver ? '#4a5568' : undefined, // Darken when an item is over
-    };
-
-    return (
-        <div
-            ref={setNodeRef}
-            id={id}
-            style={style}
-        >
-            {children}
-        </div>
-    );
+  return (
+    <div
+      ref={setNodeRef}
+      id={id}
+      className={clsx(
+        " border-2 border-transparent transition-colors",
+        full ? "rounded-full" : "rounded-xl",
+        isOver && " border-gray-500 cursor-grabbing"
+      )}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default DropZone;
