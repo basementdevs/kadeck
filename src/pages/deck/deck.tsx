@@ -4,7 +4,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
-import DeckDevices from "@/pages/deck/deck-devices.tsx";
 import DeckSettings from "@/pages/deck/deck-settings.tsx";
 import React from "react";
 import StreamDeckPlus from "@/pages/deck/devices/streamdeckplus.tsx";
