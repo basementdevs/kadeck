@@ -57,13 +57,9 @@ export function AppLayout() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <SidebarProvider className="bg-gray-800">
-        <div className="flex h-screen bg-gray-800 text-gray-300">
-          <AppSidebar />
-          <div className={"flex"}>
-            <Deck droppedItems={droppedItems} selectedDevice={device} />
-          </div>
-        </div>
+      <SidebarProvider className="flex h-screen w-full bg-gray-800 text-gray-300 ">
+        <AppSidebar />
+        <Deck droppedItems={droppedItems} selectedDevice={device} />
       </SidebarProvider>
     </DndContext>
   );

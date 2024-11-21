@@ -1,3 +1,6 @@
+import { StreamDeckKeyItem } from "@/components/app/stream-deck-key-item";
+import { StreamDeckKnobsItem } from "@/components/app/stream-deck-knobs-item";
+import { StreamDeckScreenItem } from "@/components/app/stream-deck-screen-item";
 import DropZone from "@/pages/deck/deck-droppable-key.tsx";
 import { DeckDevice } from "@/vite-env";
 
@@ -47,63 +50,35 @@ export default function StreamDeckPlus({ droppedItems }: DeckDevicesProps) {
       <div className="grid grid-cols-4 gap-4 mt-4">
         {streamDeckButtonsDropzone.map((dropzoneId, index) => (
           <div key={index}>
-            <DropZone key={dropzoneId} id={dropzoneId}>
-              <div key={index} className="bg-gray-700 p-4 rounded-lg">
-                <div className="mt-4">
-                  <div className="bg-gray-600 p-4 rounded-lg mt-2">
-                    Key: {index}
-                  </div>
-                  {droppedItems[dropzoneId]?.map((item) => (
-                    <div key={item.id} className="text-white flex items-center">
-                      {item.icon}
-                      <span className="ml-2">{item.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </DropZone>
+            <StreamDeckKeyItem
+              index={index}
+              dropzoneId={dropzoneId}
+              key={dropzoneId}
+              droppedItems={droppedItems}
+            />
           </div>
         ))}
       </div>
       <div className={"mt-4"}>
         {streamDeckScreensDropzone.map((dropzoneId, index) => (
-          <div key={index}>
-            <DropZone key={dropzoneId} id={dropzoneId}>
-              <div key={index} className="bg-gray-700 p-4 rounded-lg">
-                <div className="mt-4">
-                  <div className="bg-gray-600 p-4 rounded-lg mt-2">
-                    Screen: {index}
-                  </div>
-                  {droppedItems[dropzoneId]?.map((item) => (
-                    <div key={item.id} className="text-white flex items-center">
-                      {item.icon}
-                      <span className="ml-2">{item.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </DropZone>
-          </div>
+          <StreamDeckScreenItem
+            index={index}
+            dropzoneId={dropzoneId}
+            droppedItems={droppedItems}
+          />
         ))}
       </div>
       <div
         className={
-          "mt-4  flex justify-around items-center align-center gap-4 rounded-full bg-gray-900"
+          "mt-4  flex justify-around items-center align-center gap-4 rounded-xl bg-gray-900 py-2"
         }
       >
         {streamDeckKnobsDropzone.map((dropzoneId, index) => (
-          <div className={"rounded-full "} key={index}>
-            <DropZone key={dropzoneId} id={dropzoneId}>
-              <div key={index} className="bg-gray-700 p-10  rounded-full">
-                {droppedItems[dropzoneId]?.map((item) => (
-                  <div key={item.id} className="text-white flex items-center">
-                    {item.icon}
-                    <span className="ml-2">{item.name}</span>
-                  </div>
-                ))}
-              </div>
-            </DropZone>
-          </div>
+          <StreamDeckKnobsItem
+            dropzoneId={dropzoneId}
+            index={index}
+            droppedItems={droppedItems}
+          />
         ))}
       </div>
     </div>
