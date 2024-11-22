@@ -38,6 +38,7 @@ enum TriggerType {
     Button,
     Knob,
     Display,
+    Screen
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
