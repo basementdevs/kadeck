@@ -1,26 +1,26 @@
-import {useState, useEffect} from 'react';
-import {invoke} from "@tauri-apps/api/core";
-import {DeviceTrigger} from "@/vite-env";
-
+import { useState, useEffect } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { DeviceTrigger } from "@/vite-env";
+import { toast } from "sonner";
 
 const useSaveProfileSettings = () => {
-    const [deviceSettings, setProfileManager] = useState<DeviceTrigger>();
+  const [deviceSettings, setProfileManager] = useState<DeviceTrigger>();
 
-    const saveSettings = () => {
-        invoke("save_profile_settings", {payload: deviceSettings})
-            .then((_) => {
-                alert('saved')
-            })
-            .catch((error) => {
-                alert(error)
-            });
-    }
+  const saveSettings = () => {
+    invoke("save_profile_settings", { payload: deviceSettings })
+      .then((_) => {
+        toast.success("Saved");
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  };
 
-    useEffect(() => {
-        saveSettings();
-    }, [setProfileManager]);
+  useEffect(() => {
+    saveSettings();
+  }, [setProfileManager]);
 
-    return {setProfileManager, saveSettings};
-}
+  return { setProfileManager, saveSettings };
+};
 
-export {useSaveProfileSettings};
+export { useSaveProfileSettings };
