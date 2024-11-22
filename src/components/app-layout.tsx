@@ -6,6 +6,8 @@ import Deck from "@/pages/deck/deck.tsx";
 import { useSaveProfileSettings } from "@/hooks/commands/use-save-profile-settings.ts";
 import { DeviceTrigger, TriggerType } from "@/vite-env";
 import { invoke } from "@tauri-apps/api/core";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface DroppedItem {
   id: string;
@@ -39,10 +41,10 @@ export function AppLayout() {
 
       invoke("save_profile_settings", { device: device, payload: payload })
         .then((_) => {
-          alert("saved");
+          toast.success(`Saved`);
         })
         .catch((error) => {
-          alert(error);
+          toast.error(error);
         });
 
       setDroppedItems((prev) => {
@@ -60,6 +62,7 @@ export function AppLayout() {
       <SidebarProvider className="flex h-screen w-full bg-gray-800 text-gray-300 ">
         <AppSidebar />
         <Deck droppedItems={droppedItems} selectedDevice={device} />
+        <Toaster richColors closeButton />
       </SidebarProvider>
     </DndContext>
   );
