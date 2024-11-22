@@ -3,6 +3,6 @@ use tauri::command;
 
 #[command]
 pub fn get_modules() -> Vec<Module> {
-    let module_manager = ModuleManager::new();
-    module_manager.get_modules()
+  let module_manager = ModuleManager::new();
+  module_manager.get_modules()
 }
