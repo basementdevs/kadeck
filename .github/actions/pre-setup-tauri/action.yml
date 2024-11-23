@@ -1,0 +1,23 @@
+name: Install required dependencies by Tauri
+
+description: |
+  This action installs the dependencies required by Tauri
+
+runs:
+  using: composite
+  steps:
+    - name: Install linux dependencies
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt install libwebkit2gtk-4.1-dev \
+          build-essential \
+          curl \
+          wget \
+          file \
+          libxdo-dev \
+          libssl-dev \
+          libappindicator3-dev \
+          libayatana-appindicator3-dev \
+          librsvg2-dev \
+          patchelf
