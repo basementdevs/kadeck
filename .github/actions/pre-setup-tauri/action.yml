@@ -17,7 +17,6 @@ runs:
           file \
           libxdo-dev \
           libssl-dev \
-          libappindicator3-dev \
           libayatana-appindicator3-dev \
           librsvg2-dev \
           patchelf
