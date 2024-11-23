@@ -15,3 +15,21 @@ pre-commit:
       root: 'src-tauri/'
       glob: '*.rs'
       run: cargo clippy
+    biome:
+      run: pnpm exec biome check --no-errors-on-unmatched --files-ignore-unknown=true -- {staged_files}
+
+pre-push:
+  parallel: false
+  piped: false
+  follow: true
+  commands:
+    rustfmt:
+      root: 'src-tauri/'
+      glob: '*.rs'
+      run: cargo fmt -- --check
+    clippy:
+      root: 'src-tauri/'
+      glob: '*.rs'
+      run: cargo clippy
+    biome:
+      run: pnpm exec biome check --no-errors-on-unmatched --files-ignore-unknown=true -- {push_files}

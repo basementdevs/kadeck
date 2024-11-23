@@ -1,7 +1,7 @@
+import { useDroppable } from '@dnd-kit/core';
+import clsx from 'clsx';
 // DropZone.tsx
-import React from "react";
-import { useDroppable } from "@dnd-kit/core";
-import clsx from "clsx";
+import type React from 'react';
 
 interface DropZoneProps {
   id: string;
@@ -19,9 +19,9 @@ const DropZone: React.FC<DropZoneProps> = ({ id, children, full }) => {
       ref={setNodeRef}
       id={id}
       className={clsx(
-        " border-2 border-transparent transition-colors",
-        full ? "rounded-full" : "rounded-xl",
-        isOver && " border-gray-500 cursor-grabbing"
+        ' border-2 border-transparent transition-colors',
+        full ? 'rounded-full' : 'rounded-xl',
+        isOver && ' border-gray-500 cursor-grabbing'
       )}
     >
       {children}

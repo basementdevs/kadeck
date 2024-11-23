@@ -1,13 +1,13 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app/Sidebar.tsx";
-import React, { useState } from "react";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import Deck from "@/pages/deck/deck.tsx";
-import { useSaveProfileSettings } from "@/hooks/commands/use-save-profile-settings.ts";
-import { DeviceTrigger, TriggerType } from "@/vite-env";
-import { invoke } from "@tauri-apps/api/core";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
+import { AppSidebar } from '@/components/app/Sidebar.tsx';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/sonner';
+import Deck from '@/pages/deck/deck.tsx';
+import type { DeviceTrigger, TriggerType } from '@/vite-env';
+import { DndContext, type DragEndEvent } from '@dnd-kit/core';
+import { invoke } from '@tauri-apps/api/core';
+import type React from 'react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface DroppedItem {
   id: string;
@@ -15,10 +15,10 @@ interface DroppedItem {
   icon: React.ReactNode;
 }
 
-type Device = "streamdeckplus" | "streamdeck";
+type Device = 'streamdeckplus' | 'streamdeck';
 
 export function AppLayout() {
-  const [device, setDevice] = useState<Device>("streamdeckplus");
+  const [device, setDevice] = useState<Device>('streamdeckplus');
   const [droppedItems, setDroppedItems] = useState<{
     [key: string]: DroppedItem[];
   }>({});
@@ -26,22 +26,22 @@ export function AppLayout() {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (over && over.id.startsWith("dropzone-")) {
-      const dropzoneId = over.id as String;
-      const [_, device, type, index] = dropzoneId.split("-");
+    if (over?.id.startsWith('dropzone-')) {
+      const dropzoneId = over.id as string;
+      const [_, device, type, index] = dropzoneId.split('-');
       const item: DroppedItem = active.data.current?.item as DroppedItem;
 
       const payload = {
         action: `action-${item.name}`,
         trigger_type: type as TriggerType,
-        key_code: parseInt(index),
+        key_code: Number.parseInt(index),
         module: item.name,
         arguments: {},
       } as DeviceTrigger;
 
-      invoke("save_profile_settings", { device: device, payload: payload })
+      invoke('save_profile_settings', { device: device, payload: payload })
         .then((_) => {
-          toast.success(`Saved`);
+          toast.success('Saved');
         })
         .catch((error) => {
           toast.error(error);
@@ -59,7 +59,7 @@ export function AppLayout() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <SidebarProvider className="flex h-screen w-full bg-gray-800 text-gray-300 ">
+      <SidebarProvider className='flex h-screen w-full bg-gray-800 text-gray-300 '>
         <AppSidebar />
         <Deck droppedItems={droppedItems} selectedDevice={device} />
         <Toaster richColors closeButton />
