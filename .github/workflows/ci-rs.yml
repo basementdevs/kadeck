@@ -40,8 +40,7 @@ jobs:
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
           cache: true
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          cache-workspaces: |
-            src-tauri
+          cache-workspaces: src-tauri
 
       - name: Build project
         run: make build
@@ -67,6 +66,7 @@ jobs:
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
           cache: true
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          cache-workspaces: src-tauri
 
       - name: Run linter
         continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
@@ -96,6 +96,7 @@ jobs:
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
           cache: true
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          cache-workspaces: src-tauri
 
       - name: Run formatter
         continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
