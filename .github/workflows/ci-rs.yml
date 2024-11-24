@@ -37,6 +37,8 @@ jobs:
           target: x86_64-unknown-linux-gnu
           components: clippy, rustfmt
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
+          cache: true
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build project
         run: make build
@@ -57,17 +59,20 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@11df97af8e8102fd60b60a77dfbf58d40cd843b8 # v1.10.1
         with:
           target: x86_64-unknown-linux-gnu
-          components: clippy
+          components: clippy, rustfmt
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
+          cache: true
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Run linter
         continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
         uses: clechasseur/rs-clippy-check@50a0fd6f2f1a33307d603ee50d91eadbb2561120 # v3.0.6
         with:
           args: --all-features --no-deps
+          working-directory: ./src-tauri
 
   format:
-    name: Perform lint and format
+    name: Perform format
     runs-on: ubuntu-24.04
     needs:
       - setup
@@ -82,9 +87,13 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@11df97af8e8102fd60b60a77dfbf58d40cd843b8 # v1.10.1
         with:
           target: x86_64-unknown-linux-gnu
-          components: rustfmt
+          components: clippy, rustfmt
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
+          cache: true
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Run formatter
         continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
         uses: actions-rust-lang/rustfmt@559aa3035a47390ba96088dffa783b5d26da9326 # v1.1.1
+        with:
+          manifest-path: ./src-tauri/Cargo.toml
