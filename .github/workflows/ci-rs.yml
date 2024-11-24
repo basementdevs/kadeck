@@ -34,6 +34,7 @@ jobs:
       - name: Setup rust
         uses: actions-rust-lang/setup-rust-toolchain@11df97af8e8102fd60b60a77dfbf58d40cd843b8 # v1.10.1
         with:
+          toolchain: nightly
           target: x86_64-unknown-linux-gnu
           components: clippy, rustfmt
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
@@ -58,6 +59,7 @@ jobs:
       - name: Setup rust
         uses: actions-rust-lang/setup-rust-toolchain@11df97af8e8102fd60b60a77dfbf58d40cd843b8 # v1.10.1
         with:
+          toolchain: nightly
           target: x86_64-unknown-linux-gnu
           components: clippy, rustfmt
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
@@ -86,6 +88,7 @@ jobs:
       - name: Setup rust
         uses: actions-rust-lang/setup-rust-toolchain@11df97af8e8102fd60b60a77dfbf58d40cd843b8 # v1.10.1
         with:
+          toolchain: nightly
           target: x86_64-unknown-linux-gnu
           components: clippy, rustfmt
           rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
