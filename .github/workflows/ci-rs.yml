@@ -36,7 +36,7 @@ jobs:
         with:
           target: x86_64-unknown-linux-gnu
           components: clippy, rustfmt
-          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' && '' || '-Dwarnings' }}
+          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
 
       - name: Build project
         run: make build
@@ -58,7 +58,7 @@ jobs:
         with:
           target: x86_64-unknown-linux-gnu
           components: clippy
-          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' && '' || '-Dwarnings' }}
+          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
 
       - name: Run linter
         continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
@@ -83,7 +83,7 @@ jobs:
         with:
           target: x86_64-unknown-linux-gnu
           components: rustfmt
-          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' && '' || '-Dwarnings' }}
+          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
 
       - name: Run formatter
         continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
