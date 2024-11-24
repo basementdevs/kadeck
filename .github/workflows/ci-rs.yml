@@ -51,8 +51,7 @@ jobs:
         with:
           workspaces: src-tauri
           prefix-key: v0-rust
-          key: ${{ env.RUNNER_OS }}-${{ runner.arch }}-${{ hashFiles('**/Cargo.lock') }}
-          shared-key: cargo
+          shared-key: ${{ env.RUNNER_OS }}-${{ runner.arch }}
           cache-on-failure: false
           cache-targets: true
           cache-all-crates: false
@@ -94,8 +93,7 @@ jobs:
         with:
           workspaces: src-tauri
           prefix-key: v0-rust
-          key: ${{ env.RUNNER_OS }}-${{ runner.arch }}-${{ hashFiles('**/Cargo.lock') }}
-          shared-key: cargo
+          shared-key: ${{ env.RUNNER_OS }}-${{ runner.arch }}
           cache-on-failure: false
           cache-targets: true
           cache-all-crates: false
@@ -141,8 +139,7 @@ jobs:
         with:
           workspaces: src-tauri
           prefix-key: v0-rust
-          key: ${{ env.RUNNER_OS }}-${{ runner.arch }}-${{ hashFiles('**/Cargo.lock') }}
-          shared-key: cargo
+          shared-key: ${{ env.RUNNER_OS }}-${{ runner.arch }}
           cache-on-failure: false
           cache-targets: true
           cache-all-crates: false
