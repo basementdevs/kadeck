@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - "src-tauri/**"
+      - ".github/workflows/ci-rs.yml"
   pull_request:
     branches:
       - main
     paths:
       - "src-tauri/**"
+      - ".github/workflows/ci-rs.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

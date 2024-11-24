@@ -6,18 +6,17 @@ on:
       - main
     paths:
       - "src/**"
+      - ".github/workflows/ci-js.yml"
   pull_request:
     branches:
       - main
     paths:
       - "src/**"
+      - ".github/workflows/ci-js.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
-env:
-  COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
 
 jobs:
   setup:
