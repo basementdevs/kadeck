@@ -49,14 +49,14 @@ interface ProfileManager {
 }
 
 enum DeviceType {
-  StreamDeckPlus = "StreamDeckPlus",
+  StreamDeckPlus = 'StreamDeckPlus',
 }
 
 enum TriggerType {
-  Button = "Button",
-  Knob = "Knob",
-  Display = "Display",
-  Screen = "Screen",
+  Button = 'Button',
+  Knob = 'Knob',
+  Display = 'Display',
+  Screen = 'Screen',
 }
 
 type DeckDevice = {

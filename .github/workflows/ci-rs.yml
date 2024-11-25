@@ -1,0 +1,101 @@
+name: CI - Rust
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src-tauri/**"
+      - ".github/workflows/ci-rs.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src-tauri/**"
+      - ".github/workflows/ci-rs.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: ./src-tauri
+
+jobs:
+  setup:
+    name: Setup rust, clippy and rustfmt
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install required dependencies by Tauri
+        uses: ./.github/actions/pre-setup-tauri
+
+      - name: Setup rust
+        uses: ./.github/actions/setup-rust
+        with:
+          toolchain: nightly
+          target: x86_64-unknown-linux-gnu
+          components: clippy, rustfmt
+          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
+          workspaces: src-tauri
+
+      - name: Build project
+        run: make build
+
+  lint:
+    name: Perform lint
+    runs-on: ubuntu-24.04
+    needs:
+      - setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install required dependencies by Tauri
+        uses: ./.github/actions/pre-setup-tauri
+
+      - name: Setup rust
+        uses: ./.github/actions/setup-rust
+        with:
+          toolchain: nightly
+          target: x86_64-unknown-linux-gnu
+          components: clippy, rustfmt
+          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
+          workspaces: src-tauri
+
+      - name: Run linter
+        continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
+        uses: clechasseur/rs-clippy-check@50a0fd6f2f1a33307d603ee50d91eadbb2561120 # v3.0.6
+        with:
+          args: --all-features --no-deps
+          working-directory: ./src-tauri
+
+  format:
+    name: Perform format
+    runs-on: ubuntu-24.04
+    needs:
+      - setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install required dependencies by Tauri
+        uses: ./.github/actions/pre-setup-tauri
+
+      - name: Setup rust
+        uses: ./.github/actions/setup-rust
+        with:
+          toolchain: nightly
+          target: x86_64-unknown-linux-gnu
+          components: clippy, rustfmt
+          rustflags: ${{ vars.BUILD_CONTINUE_ON_ERROR != 'true' && '-Dwarnings' || '' }}
+          workspaces: src-tauri
+
+      - name: Run formatter
+        continue-on-error: ${{ vars.BUILD_CONTINUE_ON_ERROR == 'true' }}
+        uses: actions-rust-lang/rustfmt@559aa3035a47390ba96088dffa783b5d26da9326 # v1.1.1
+        with:
+          manifest-path: ./src-tauri/Cargo.toml

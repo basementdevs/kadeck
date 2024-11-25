@@ -1,3 +1,4 @@
+# See more at https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#profile-rustflags-option
 cargo-features = ["profile-rustflags"]
 
 [package]
@@ -30,9 +31,6 @@ paris = { version = "1.5.15", features = ["macros", "timestamps"] }
 tauri-plugin-log = "2"
 uuid = { version = "1.11.0", features = ["v4"] }
 chrono = { version = "0.4.38", features = ["serde"] }
-
-[unstable]
-profile-rustflags = true
 
 [profile.dev]
 rustflags = ["-Zthreads=20"] # Better compile performance.

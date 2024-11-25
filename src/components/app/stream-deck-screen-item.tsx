@@ -1,4 +1,4 @@
-import DropZone from "@/pages/deck/deck-droppable-key";
+import DropZone from '@/pages/deck/deck-droppable-key';
 
 interface DroppedItem {
   id: string;
@@ -22,13 +22,13 @@ export function StreamDeckScreenItem({
 }: StreamDeckScreenItemProps) {
   return (
     <DropZone key={dropzoneId} id={dropzoneId}>
-      <div key={index} className="bg-gray-900  rounded-xl px-4 py-4">
-        <div className="flex flex-col gap-2">
-          <span className="text-sm text-gray-400">Screen: {index}</span>
+      <div key={index} className='bg-gray-900  rounded-xl px-4 py-4'>
+        <div className='flex flex-col gap-2'>
+          <span className='text-sm text-gray-400'>Screen: {index}</span>
           {droppedItems?.[dropzoneId]?.map((item) => (
-            <div key={item.id} className="text-white flex items-center">
+            <div key={item.id} className='text-white flex items-center'>
               {item.icon}
-              <span className="ml-2">{item.name}</span>
+              <span className='ml-2'>{item.name}</span>
             </div>
           ))}
         </div>
