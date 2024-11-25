@@ -8,11 +8,11 @@ on:
       - synchronize
       - reopened
 
-permissions:
-  pull-requests: write
-
 jobs:
   main:
+    permissions:
+      pull-requests: write
+      statuses: write
     name: Validate PR title
     runs-on: ubuntu-24.04
     steps:
