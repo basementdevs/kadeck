@@ -1,0 +1,14 @@
+[package]
+name = "kadeck_obs"
+version = "0.1.0"
+authors = ["danielhe4rt <danielhe4rt@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+kadeck-plugin-skeleton = { path = "../kadeck-plugin-skeleton", version = "*" }
+
+[lib]
+name = "kadeck_obs"
+crate-type = ["dylib"]
