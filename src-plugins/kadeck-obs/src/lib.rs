@@ -2,9 +2,10 @@ mod actions;
 
 use kadeck_plugin_skeleton::{Module, ModuleAction, ModuleContract, ModuleSettings};
 use std::collections::HashMap;
+use std::future::Future;
 
 #[no_mangle]
-pub extern "Rust" fn new_service() -> Box<dyn ModuleContract> {
+pub extern "Rust" fn new_service() -> Box<(dyn ModuleContract + 'static)> {
     Box::new(ObsModule::new())
 }
 
@@ -46,37 +47,36 @@ impl ModuleContract for ObsModule {
 
             actions: vec![
                 ModuleAction {
-                    name: "start".to_string(),
+                    name: "record".to_string(),
                     description: "Start recording".to_string(),
                     settings: vec![],
                 },
                 ModuleAction {
-                    name: "stop".to_string(),
-                    description: "Stop recording".to_string(),
-                    settings: vec![],
-                },
-                ModuleAction {
-                    name: "pause".to_string(),
-                    description: "Pause recording".to_string(),
-                    settings: vec![],
-                },
-                ModuleAction {
-                    name: "resume".to_string(),
-                    description: "Resume recording".to_string(),
+                    name: "stream".to_string(),
+                    description: "Start/Stop Streaming".to_string(),
                     settings: vec![],
                 },
             ],
         }
     }
 
-    fn run_action(&self, action: &str, settings: HashMap<String, String>) -> usize {
-        match action {
-            "start" => actions::start(settings),
-            "stop" => actions::start(settings),
-            "pause" => panic!("Not implemented"),
-            "resume" => panic!("Not implemented"),
-            _ => panic!("Not implemented")
-        }
+    fn run_action(&self, action: &str, settings: HashMap<String, String>)  {
+        let runtime = tokio::runtime::Runtime::new().unwrap();
+
+        runtime.block_on(async {
+            match action {
+                "record" => {
+                    actions::toggle_recording(settings).await.unwrap();
+                },
+                "stream" => {
+                    actions::toggle_stream(settings).await.unwrap();
+                },
+                _ => {
+                    println!("Unknown action: {}", action);
+                }
+            }
+        });
+
     }
 }
 

@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::future::Future;
 
 #[derive(Debug, Clone)]
 pub struct ModuleSettings {
@@ -11,6 +12,7 @@ pub struct ModuleSettings {
 #[derive(Debug, Clone)]
 pub struct ModuleAction {
     pub name: String,
+    // toggleable? (start/stop) or not (clickable)
     pub description: String,
     pub settings: Vec<ModuleSettings>,
 }
@@ -27,5 +29,5 @@ pub struct Module {
 pub trait ModuleContract {
     fn get_module(&self) -> Module;
 
-    fn run_action(&self, action: &str, settings: HashMap<String, String>) -> usize; // Exit code?
+    fn run_action(&self, action: &str, settings: HashMap<String, String>);
 }

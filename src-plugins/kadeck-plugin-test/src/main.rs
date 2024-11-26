@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use kadeck_plugin_skeleton::ModuleContract;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let lib = unsafe { libloading::Library::new("target/debug/libkadeck_obs.so") }
         .expect("load library");
     let new_service: libloading::Symbol<extern "Rust" fn() -> Box<dyn ModuleContract>> = unsafe { lib.get(b"new_service") }
@@ -12,5 +13,5 @@ fn main() {
 
     settings.insert("scene".to_string(), "main".to_string());
 
-    println!("{:?}", service.run_action("start", settings));
+    println!("{:?}", service.run_action("record", settings));
 }
