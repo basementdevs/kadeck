@@ -30,7 +30,7 @@ log = "0.4.22"
 paris = { version = "1.5.15", features = ["macros", "timestamps"] }
 tauri-plugin-log = "2"
 uuid = { version = "1.11.0", features = ["v4"] }
-chrono = { version = "0.4.38", features = ["serde"] }
+chrono = { version = "0.4.39", features = ["serde"] }
 
 [profile.dev]
 rustflags = ["-Zthreads=20"] # Better compile performance.
