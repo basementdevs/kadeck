@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "kadeck-obs",
+    "kadeck-plugin-skeleton",
+    "kadeck-plugin-test"
+]
