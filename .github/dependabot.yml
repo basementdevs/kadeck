@@ -15,6 +15,7 @@ updates:
           - "version-update:semver-major"
 
   - package-ecosystem: "npm"
+    open-pull-requests-limit: 0
     directory: "/"
     schedule:
       interval: "weekly"
@@ -35,6 +36,7 @@ updates:
           - "*"
 
   - package-ecosystem: "cargo"
+    open-pull-requests-limit: 0
     directory: "/src-tauri"
     schedule:
       interval: "weekly"
