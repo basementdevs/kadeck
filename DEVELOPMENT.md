@@ -19,9 +19,9 @@
 ## Hooks Needed
 
 * When Select which device: useFetchDevices
-  * HID Devices from specific vendors
+    * HID Devices from specific vendors
 * Saving the Settings: useSaveProfile
-  * POST to the API
+    * POST to the API
 
 ## Flow
 
@@ -40,15 +40,15 @@
             5. Fields are populated based on the action settings object
         5. User sets the configuration
 
-
 ## UI Draggable
 
-Goal: bring an "Action" to some specific Key. 
+Goal: bring an "Action" to some specific Key.
+
 * Global Context for React DND
 * Lock features per type (Button, Knob, Touch)
-* 
+*
 
-## Devices 
+## Devices
 
 ```json
 [
@@ -63,8 +63,6 @@ Goal: bring an "Action" to some specific Key.
 
 ```
 
-
-   
 ## Profiles
 
 ```json
@@ -103,4 +101,63 @@ Goal: bring an "Action" to some specific Key.
   ]
 }
 
+```
+
+## Modules/Plugins Flow
+
+All the plugins must be created following the `kadeck-plugin-skeleton interface` which at this first moment looks like:
+
+```rust
+pub trait ModuleContract {
+    fn get_module(&self) -> Module;
+
+    fn run_action(&self, action: &str, settings: HashMap<String, String>);
+}
+```
+
+> This skeleton must be published as a 3rd party package.
+
+### Module/Plugin Configuration
+
+Inside the `ModuleAction` you can find an `Vec<ModuleSettings>` property which will holds all information you need to
+build the settings page inside the application. You can think into something which will holds any metadata needed to
+perform the module action. E.g:
+
+```txt
+Module: OBS
+Settings:
+* Address: string (ipv4/ipv6)
+* Port: int
+* Password: Option<String> 
+```
+
+This will be stored together with the user profile and should be sent to every request arg as `{module}_{settings}`.
+
+Imagine that we have two different modules being `Twitch` and `OBS`:
+```txt
+obs_host: something
+obs_port: something
+
+twitch_access_key: some-key 
+```
+
+you would be able to use these informations inside the module actions: 
+```rust
+pub async fn toggle_stream(args: HashMap<String, String>) -> anyhow::Result<usize> {
+    let host = args.get("obs_host").unwrap().clone();
+    let port = args.get("obs_port").unwrap().clone().parse::<u16>().unwrap();
+    let password = args.get("obs_password");
+
+    let service = obws::Client::connect(host, port, password).await?;
+    let service = service.streaming();
+
+    let status = service.status().await?;
+
+    match status.active {
+        true => service.stop().await?,
+        false => service.start().await?,
+    }
+
+    Ok(0)
+}
 ```
