@@ -31,7 +31,7 @@ runs:
         echo "CACHE_KEY=${OS_ARCH,,}" >> "$GITHUB_ENV"
 
     - name: Setup rust
-      uses: actions-rust-lang/setup-rust-toolchain@9399c7bb15d4c7d47b27263d024f0a4978346ba4 # v1.11.0
+      uses: actions-rust-lang/setup-rust-toolchain@ab6845274e2ff01cd4462007e1a9d9df1ab49f42 # v1.14.0
       with:
         toolchain: ${{ inputs.toolchain }}
         target: ${{ inputs.target }}
